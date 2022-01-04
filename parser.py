@@ -14,5 +14,6 @@ def parsesite(url):
     title = soup.find('h1').get_text()
     sections = []
     i = 0
-    for i in range(0, 3):
+    max = len(soup.find_all('h2'))
+    for i in range(0, max):
         sections.append(soup.find_all('h2')[i].get_text()) 
