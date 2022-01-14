@@ -13,6 +13,9 @@ class ParsePage:
         except:
             pass
 
+    def full_page(self):
+        return self.page
+
     def parse_title(self):
         title = self.page.find('h1').get_text()
         return title 
