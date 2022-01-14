@@ -1,19 +1,19 @@
 import pytest
 import parser
 
+# test page Tom yum 
+test_page = parser.ParsePage('https://en.wikipedia.org/wiki/Tom_yum')
+
 def test_parse_titles():
-    url = 'https://en.wikipedia.org/wiki/Tom_yum'
-    title = parser.parse_title(url) 
+    title = test_page.parse_title() 
     assert title == 'Tom yum'
 
-def test_bad_site():
-    url = 'https://en.wikipedia.cag/wiki/Tom_yum'
-    title = parser.parse_title(url) 
-    assert title == 0
+##### will have to come back to this ##### 
+## def test_bad_site():
+    ## pass
 
 def test_parse_sections():
-    url = 'https://en.wikipedia.org/wiki/Tom_yum'
-    sections = parser.parse_sections(url) 
+    sections = test_page.parse_sections() 
     assert sections == ['Contents', 'Preparation[edit]', 'Selected types[edit]', 
         'Other spicy and sour soups[edit]', 'Beyond Thailand[edit]', 'See also[edit]', 
         'References[edit]', 'External links[edit]', 'Navigation menu']
