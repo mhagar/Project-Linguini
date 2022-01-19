@@ -1,4 +1,5 @@
 # This script expands the dataset using URLs
+# This file isn't needed, the code's been refactored into "getURLs.py"
 
 import pandas as pd
 
