@@ -1,7 +1,0 @@
-# Food
-SELECT ?item ?itemLabel
-WHERE
-{
- ?item wdt:P279 wd:Q2095. # Must be a `subclass of` the `food` entity
- SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". } # Helps get the label in your language, if not, then en language
-}
