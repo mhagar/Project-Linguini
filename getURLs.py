@@ -45,16 +45,24 @@ def retrieveItemURLs(df, begin=0, end=None):
         """
         print(f"Retrieving {qcode}..")
         item = pywikibot.ItemPage(repo, qcode)
-        sites = [x for x in item.get()['sitelinks']]
+
+        sitecodes = [x for x in item.get()['sitelinks']]
         # returns ['enwiki', 'itwiki', ..]
-        item_labels = {x[0:2]: item.getSitelink(site=x) for x in sites}
-        # returns {'en':'garnish (food)', 'it':'garnishio (foodio)',}
+
+        siteurls = [x.site.siteinfo.get('general')['base'] for x in
+                    [z for z in item.get()['sitelinks'].values()]]
+        # returns ['https://en.wikipedia.org/wiki/Main_Page', ..]
+        # Sorry for double list comprehension lmaoooo
+
+        item_labels = [item.getSitelink(site=x) for x in sitecodes]
+        # returns ['garnish (food)', 'garnishio (foodio)', ..]
+
         item_urls = []
         try:
-            for k, v in item_labels.items():
-                link = f"https://{k}.wikipedia.org/wiki/{v}"
-                link = link.replace(" ", "_")
-                link = link.replace(",", "_")
+            for url, label in zip(siteurls, item_labels):
+                front = url[:(url.find('wiki/')+5)]
+                back = label.replace(" ", "_").replace(",", "_")
+                link = front + back
                 item_urls.append(link)
 
         except Exception:
@@ -94,10 +102,11 @@ def expandRows(df):
         raw_row = df.loc[i].to_dict()
         expanded_row = []
         for n in raw_row['urls']:
+            language = n[8:n.find('.wikipedia')]
             expanded_row.append({'index': i,
                                  'item': raw_row['item'],
                                  'itemLabel': raw_row['itemLabel'],
-                                 'language': n[8:10],
+                                 'language': language,
                                  'url': n})
 
         expansion = pd.DataFrame(expanded_row).set_index('index')
@@ -119,3 +128,7 @@ if __name__ == "__main__":
     input(...)
 
     import pdb; pdb.set_trace()  # FREEZE! (lemme inspect the output pls)
+
+
+# Everything seems to work.. line 123 spits out a warning from pandas tho.
+# Next step: Visit each link and cache it.
