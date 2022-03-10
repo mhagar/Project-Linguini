@@ -14,4 +14,8 @@ We want to inspect Wikipedia articles about food and compare them across languag
 
 `cache_4_items.py` uses `URLtoHTML.py` to cache the first 4 items in `/datasets/small_URL_dataset`. The output resides in `/archive_cache`, which is not on github and should be downloaded separately here: https://www.dropbox.com/sh/0z4yi79f5mzf1e8/AAC0yRfyEzUY746Jxw9WZEp6a?dl=0
 
+<<<<<<< HEAD
 Make sure you place it in the main working directory.
+=======
+Make sure you place it in the main working directory.
+>>>>>>> 28a9e731bc9b5ff50c14393bc46cdd15833e61d6

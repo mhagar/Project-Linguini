@@ -64,12 +64,12 @@ def retrieveItemURLs(df, begin=0, end=None):
                 back = label.replace(" ", "_").replace(",", "_")
                 link = front + back
                 item_urls.append(link)
+            print(f"Retrieved {qcode}")
 
         except Exception:
             print(f"Something wrong with {qcode}")
             item_urls = ['error']
 
-        print(f"Retrieved {qcode}")
         return item_urls
         # item_urls is a list ['https://en.wi../garnish_(food)', ..]
 
@@ -78,8 +78,12 @@ def retrieveItemURLs(df, begin=0, end=None):
     repo = site.data_repository()
 
     # Creates a list of article URLs for each item
-    df['urls'] = df['item']
-    df['urls'][begin:end] = df['item'][begin:end].apply(getLink)
+    df['urls'] = df['item'].copy()
+    import pdb; pdb.set_trace()
+    df = df[begin:end]  # Selects only the portion being parsed
+    import pdb; pdb.set_trace()
+    df.loc[:, 'urls'] = df['item'].copy().apply(getLink)
+    import pdb; pdb.set_trace()
     return df
 
 
@@ -99,10 +103,10 @@ def expandRows(df):
     """
     expand_df = pd.DataFrame(columns=['item', 'itemLabel', 'language', 'url'])
     for i in range(0, len(df)):
-        raw_row = df.loc[i].to_dict()
+        raw_row = df.iloc[i].to_dict()
         expanded_row = []
         for n in raw_row['urls']:
-            language = n[8:n.find('.wikipedia')]
+            language = n[8:n.find('.wiki')]
             expanded_row.append({'index': i,
                                  'item': raw_row['item'],
                                  'itemLabel': raw_row['itemLabel'],
@@ -120,8 +124,10 @@ if __name__ == "__main__":
           "Press ENTER to retrieve URLs for first 5 items and load debugger\n"
           "Otherwise, import this script as a module")
 
-    df = loadJSON('food_articles_dec_23_2021.json', cleanQCodes=True)
-    df = retrieveItemURLs(df.loc[0:5], begin=0, end=5)
+    df = loadJSON('datasets/food_articles_dec_23_2021.json', cleanQCodes=True)
+    import pdb; pdb.set_trace()
+    df = retrieveItemURLs(df, begin=5, end=6)
+    import pdb; pdb.set_trace()
     df = expandRows(df)
 
     print(df.head())
