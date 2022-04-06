@@ -2,7 +2,8 @@
 # - Number of characters in the ~body~ of the article
 # - Number of pictures
 # - Number of sections
-# - ..
+# - ..?
+# It is used by Archive_scraper.py on the pages in 'archive_cache'
 # Mostafa | Mar 7 2022
 
 from bs4 import BeautifulSoup
@@ -14,12 +15,18 @@ def analyze(article):
     soup = BeautifulSoup(article, "html.parser")
 
     results = {
+               'title': get_name(soup),
                'num_chars': count_chars(soup),
                'num_pics': count_pics(soup),
                'num_sects': count_sects(soup)
                }
 
     return results
+
+
+def get_name(soup):
+    name = soup.find_all("h1")[0].text
+    return name
 
 
 def count_chars(soup):
@@ -38,10 +45,10 @@ def count_sects(soup):
     headers = soup.find_all("h2")
     return len(headers)
 
-# TODO: Think of other characteristics to measure. Maybe I'll just stick with
-# these for now..
+# TODO: Think of other characteristics to measure.
+# TODO: eg. NUMBER OF REFERENCES!!
 
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     # This runs if you execute HtmlAnalyzer.py instead of import it
     pass
