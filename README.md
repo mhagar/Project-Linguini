@@ -1,10 +1,41 @@
 # wiki-food-lang
+Need a better project name tbh. Maybe 'The Linguini Project'?
 
-We want to inspect Wikipedia articles about food and compare them across languages. This project is currently split into three steps:
-1. Pull all the Wikipedia food article URLs 
-2. Put the URLs through a parser to save the HTMl file into a dataset
-3. Inspect and analyze the data
+## Project Aims:
 
+**To analyze geographic discrepancies between article comprehensiveness for food/cuisine-related articles on wikipedia across different languages, and present the data in an interactive website/dashboard.**
+
+
+## Planning:
+
+1) Come up with some "`article comprehensiveness score`" (ACS), possibly derived from article length, number of pictures, number of sections, and number of references. More descriptors could be included.
+
+2) Come up with some "`geographical relation score`" (GRS). For example, for '*Borscht*', eastern European languages should have a high geographical relation score and Asiatic should have a low score. 
+
+3) Assemble data + findings into an interactive website where users can compare and explore foods/languages. Present striking examples.
+
+In theory, article comprehensiveness should correlate with geographical relation. Striking examples could be cases where this isn't true: for example, Japanese and Afrikaan wikipedias have surprisingly comprehensive articles for *Borscht*. Another striking example could be hypercorrellations, like the discrepancy between the French and English articles for *Omelette* (the French article is 10x longer).
+
+## TODO:
+
+- Improve `HTMLAnalyzer.py`:
+    - `count_pics()` returns an inaccurate number of actual article images (gets muddled with random thumbnail stuff)
+    - Consider fishing out number of *unique* pictures
+- 
+
+- Implement ACS scoring.
+    - Proposal: assess each descriptor (number of lines, images, etc) relative to the whole population. i.e. '*this article's image count is in the 96th percentile in the whole database*'. The total score could be the sum of all such descriptor percentiles.
+
+    - Problems with the above approach: it seems like article comprehensiveness is distributed such that there's a pretty tight mean for most languages, and a handful of really far outliers. It's the outliers that are of interest here.
+
+        - This could potentially be alleviated by operating on log scales.
+
+- 
+
+- Implement GRS scoring.
+    - No idea how to go about this. Should start with each food's Q-code.
+
+## Script Descriptions:
 
 `getURLs.py` is a script that retrieves the list of all food-related wiki articles using a `SPARQL` query to wikidata. In principle, this could be used to retrieve all 2858 foods, but for now we generated a "small" dataset using the first 5 foods (`/datasets/small_URL_dataset`). This amounts to about 300 pages of wiki articles available in all languages!!
 
@@ -15,4 +46,3 @@ We want to inspect Wikipedia articles about food and compare them across languag
 `cache_4_items.py` uses `URLtoHTML.py` to cache the first 4 items in `/datasets/small_URL_dataset`. The output resides in `/archive_cache`, which is not on github and should be downloaded separately here: https://www.dropbox.com/sh/0z4yi79f5mzf1e8/AAC0yRfyEzUY746Jxw9WZEp6a?dl=0
 
 Make sure you place it in the main working directory.
-
