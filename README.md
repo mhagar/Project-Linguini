@@ -1,5 +1,5 @@
-# wiki-food-lang
-Need a better project name tbh. Maybe 'The Linguini Project'?
+# The Linguini Project
+A data analytics project about food on wikipedia
 
 ## Project Aims:
 
