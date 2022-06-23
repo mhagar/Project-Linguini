@@ -1,7 +1,28 @@
-# Food
-SELECT ?item ?itemLabel
+# Needed to retrieve links:
+PREFIX schema: <http://schema.org/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+
+SELECT ?item ?itemLabel ?article
 WHERE
-{
+{       
  ?item wdt:P279 wd:Q2095. # Must be a `subclass of` the `food` entity
+  OPTIONAL {
+    ?article schema:about ?item .
+  }
  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". } # Helps get the label in your language, if not, then en language
 }
+
+
+
+# This is the old query:
+# # Food
+# SELECT ?item ?itemLabel
+# WHERE
+# {
+#  ?item wdt:P279 wd:Q2095. # Must be a `subclass of` the `food` entity
+#  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". } # Helps get the label in your language, if not, then en language
+# }
+

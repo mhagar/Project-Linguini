@@ -18,9 +18,16 @@ In theory, article comprehensiveness should correlate with geographical relation
 
 ## TODO:
 
+- Write tools for data exploration:
+    - function for labelling scatterplots by language in a non-crowded manner (i.e. only labels outliers)
+    
+    - function for quickly displaying a zoomed out version of a page, and able to flip through the pages rapidly
+
 - Improve `HTMLAnalyzer.py`:
-    - `count_pics()` returns an inaccurate number of actual article images (gets muddled with random thumbnail stuff)
-    - Consider fishing out number of *unique* pictures
+    - ~~`count_pics()` returns an inaccurate number of actual article images (gets muddled with random thumbnail stuff)~~
+    - Add a `count_unique_pics()` and `count_unique_refs()` function
+    - Implement logging so that 'failed' analyses are recorded for inspection later
+        (to check and see where it goes wrong/what the blindspots are): web-scraping is finicky lol
 - 
 
 - Implement ACS scoring.
